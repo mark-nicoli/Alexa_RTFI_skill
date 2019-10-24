@@ -142,10 +142,6 @@ class IrishRailRTPI(object):
         return pruned_data
 
     def get_train_stops(self, train_code, date=None):
-        """Get details for a train.
-        @param train_code code for the trian
-        @param date Date in format "15 oct 2017". If none use today
-        """
         if date is None:
             date = datetime.date.today().strftime("%d %B %Y")
         url = self.api_base_url + 'getTrainMovementsXML'

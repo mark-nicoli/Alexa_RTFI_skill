@@ -22,6 +22,22 @@ def on_intent(event):
     elif intent_name == "AMAZON.HelpIntent":
         return get_help()
 
+def get_train_time(event):
+    train_times = IrishRailRTPI()
+    origin = input('origin: ')
+    #destination = raw_input('destination: ')
+    dir = input('direction: ')
+    data = json.dumps(train_times.get_station_by_name(origin,num_minutes=30), indent=4, sort_keys=True)
+    resp = json.loads(data)
+
+    for i in range(len(resp)):
+        dict_data = resp[i]
+        if dict_data['direction']==dir: #filter out by direction
+            #print(dict_data)
+            to_say = "the next "+dir" train is in"+dict_data['due_in_mins']"mins"
+            return say_duration(to_say)
+
+def get_bus_time(event):
     
 def build_speechlet_response(title, output, reprompt_text, should_end_session):
     return {
@@ -48,3 +64,9 @@ def get_help():
     card_title = "transport times error"
     shouldEndSession = False
     return build_response(build_speechlet_response(card_title, speed_output, None, shouldEndSession))
+
+def say_duration(duration):
+    speech_output = duration
+    card_title = 'Transport times'
+    should_end_session = True
+    return build_response(build_speechlet_response(card_title, speech_output, None, should_end_session))

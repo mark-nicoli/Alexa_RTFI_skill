@@ -1,0 +1,50 @@
+from __future__ import print_function
+from botocore.vendored import requests
+import datetime import datetime
+import logging
+
+def lambda_handler(event, context):
+    if event['request']['type'] == "LaunchRequest":
+        return get_help() #provide functionality desc
+    elif event['request']['type'] == "IntentRequest":
+        return on_intent(event) #execute command
+
+def on_intent(event):
+    intent = event['request']['intent']
+    intent_name = event['request']['intent']['name']
+    print('on_intent, session: ')
+    print(event['session'])
+
+    if intent_name == "GetTrainTimes":
+        return get_train_time(event)
+    elif intent_name == "getBusTimes":
+        return get_bus_time(event)
+    elif intent_name == "AMAZON.HelpIntent":
+        return get_help()
+
+    
+def build_speechlet_response(title, output, reprompt_text, should_end_session):
+    return {
+        'outputSpeech': {
+            'type': 'PlainText',
+            'text': output
+        },
+        'card': {
+            'type': 'Simple',
+            'title': title,
+            'content': output
+        },
+        'reprompt': {
+            'outputSpeech': {
+                'type': 'PlainText',
+                'text': reprompt_text
+            }
+        },
+        'shouldEndSession': should_end_session
+    }
+
+def get_help():
+    speech_output = "welcome to transport times"
+    card_title = "transport times error"
+    shouldEndSession = False
+    return build_response(build_speechlet_response(card_title, speed_output, None, shouldEndSession))

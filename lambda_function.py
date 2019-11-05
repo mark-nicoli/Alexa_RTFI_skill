@@ -32,7 +32,7 @@ class LaunchRequestHandler(AbstractRequestHandler):
 
 
 class GetTrainTimesHandler(AbstractRequestHandler):
-    """Handler for Hello World Intent."""
+    """Handler for train times Intent."""
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
         return ask_utils.is_intent_name("GetTrainTimes")(handler_input)
@@ -46,6 +46,19 @@ class GetTrainTimesHandler(AbstractRequestHandler):
                 .speak(speak_output)
                 # .ask("add a reprompt if you want to keep the session open for the user to respond")
                 .response
+        )
+
+class GetBusTimesHandler(AbstractRequestHandler):
+    def can_handle(self, handler_input):
+        return ask_utils.is_intent_name("GetBusTimes")(handler_input)
+
+    def handle(self, handler_input):
+        speak_output = "you have opened bus times"
+
+        return (
+            handler_input.response_builder
+            .speak(speak_output)
+            .response
         )
 
 class HelpIntentHandler(AbstractRequestHandler):
@@ -67,7 +80,6 @@ class HelpIntentHandler(AbstractRequestHandler):
 
 
 class CancelOrStopIntentHandler(AbstractRequestHandler):
-    """Single handler for Cancel and Stop Intent."""
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
         return (ask_utils.is_intent_name("AMAZON.CancelIntent")(handler_input) or
@@ -99,11 +111,6 @@ class SessionEndedRequestHandler(AbstractRequestHandler):
 
 
 class IntentReflectorHandler(AbstractRequestHandler):
-    """The intent reflector is used for interaction model testing and debugging.
-    It will simply repeat the intent the user said. You can create custom handlers
-    for your intents by defining them above, then also adding them to the request
-    handler chain below.
-    """
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
         return ask_utils.is_request_type("IntentRequest")(handler_input)
@@ -142,11 +149,6 @@ class CatchAllExceptionHandler(AbstractExceptionHandler):
                 .ask(speak_output)
                 .response
         )
-
-# The SkillBuilder object acts as the entry point for your skill, routing all request and response
-# payloads to the handlers above. Make sure any new handlers or interceptors you've
-# defined are included below. The order matters - they're processed top to bottom.
-
 
 sb = SkillBuilder()
 

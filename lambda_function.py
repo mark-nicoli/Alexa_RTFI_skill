@@ -4,6 +4,7 @@ import ask_sdk_core.utils as ask_utils
 #import db
 import json
 from ir import IrishRailRTPI
+import db
 
 from ask_sdk_core.skill_builder import SkillBuilder
 from ask_sdk_core.dispatch_components import AbstractRequestHandler
@@ -68,7 +69,8 @@ class GetTrainTimesHandler(AbstractRequestHandler):
         for i in range(len(resp)):
             dict_data = resp[i]
             if dict_data['direction']==direction: #filter out by direction
-                alexa_resp = "the next"+direction+"train is in"+dict_data['due_in_mins']+"mins"
+                time = dict_data['due_in_mins']
+                alexa_resp = "the next"+direction+"train is in"+time+"mins"
                 alexa_ask = "wanna hear bus times?"
 
         return(
@@ -83,7 +85,14 @@ class GetBusTimesHandler(AbstractRequestHandler):
         return ask_utils.is_intent_name("GetBusTimes")(handler_input)
 
     def handle(self, handler_input):
-        speak_output = "you have opened bus times"
+        route = 37
+        stop_number = 4825
+        g = db.RtpiApi(user_agent='test')
+        bus_times = g.rtpi(stop_number, route)
+        if bus_times.results[0]['duetime'] == 'due':
+            speak_output = "The bus is due now"
+        else:
+            speak_output = "The next bus is in "+bus_times.results[0]['duetime']+" minutes"
 
         return (
             handler_input.response_builder
@@ -179,7 +188,7 @@ sb = SkillBuilder()
 
 sb.add_request_handler(LaunchRequestHandler())
 sb.add_request_handler(GetTrainTimesHandler())
-#sb.add_request_handler(GetBusTimesHandler())
+sb.add_request_handler(GetBusTimesHandler())
 sb.add_request_handler(HelpIntentHandler())
 sb.add_request_handler(CancelOrStopIntentHandler())
 sb.add_request_handler(SessionEndedRequestHandler())

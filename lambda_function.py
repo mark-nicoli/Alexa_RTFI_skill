@@ -57,21 +57,25 @@ class GetTrainTimesHandler(AbstractRequestHandler):
         # type: (HandlerInput) -> bool
         return ask_utils.is_intent_name("GetTrainTimes")(handler_input)
 
-    def railTimeIntent():
+    def handle():
         train_times = IrishRailRTPI()
         origin = "Maynooth"
         #destination = raw_input('destination: ')
-        dir = "southbound"
+        direction = "southbound"
         data = json.dumps(train_times.get_station_by_name(origin,num_minutes=30), indent=4, sort_keys=True)
         resp = json.loads(data)
 
         for i in range(len(resp)):
             dict_data = resp[i]
-            if dict_data['direction']==dir: #filter out by direction
-                alexa_resp = "the next"+dir+"train is in"+dict_data['due_in_mins']"mins"
+            if dict_data['direction']==direction: #filter out by direction
+                alexa_resp = "the next"+direction+"train is in"+dict_data['due_in_mins']+"mins"
                 alexa_ask = "wanna hear bus times?"
 
-        return handler_input.response_builder.speak(alexa_resp).ask(alexa_ask)
+        return(
+            handler_input.response_builder
+            .speak(alexa_resp)
+            .ask(alexa_ask)
+        )
 
 
 class GetBusTimesHandler(AbstractRequestHandler):

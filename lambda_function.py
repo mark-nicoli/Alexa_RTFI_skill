@@ -1,7 +1,6 @@
 import logging
 import ask_sdk_core.utils as ask_utils
 
-#import db
 import json
 from ir import IrishRailRTPI
 import db
@@ -89,7 +88,7 @@ class GetBusTimesHandler(AbstractRequestHandler):
         stop_number = 4825
         g = db.RtpiApi(user_agent='test')
         bus_times = g.rtpi(stop_number, route)
-        if bus_times.results[0]['duetime'] == 'due':
+        if bus_times.results[0]['duetime'] == 'Due':
             speak_output = "The bus is due now"
         else:
             speak_output = "The next bus is in "+bus_times.results[0]['duetime']+" minutes"

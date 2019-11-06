@@ -1,6 +1,10 @@
 import logging
 import ask_sdk_core.utils as ask_utils
 
+#import db
+import json
+from ir import IrishRailRTPI
+
 from ask_sdk_core.skill_builder import SkillBuilder
 from ask_sdk_core.dispatch_components import AbstractRequestHandler
 from ask_sdk_core.dispatch_components import AbstractExceptionHandler
@@ -15,8 +19,6 @@ logger.setLevel(logging.INFO)
 class LaunchRequestHandler(AbstractRequestHandler):
     """Handler for Skill Launch."""
     def can_handle(self, handler_input):
-        # type: (HandlerInput) -> bool
-
         return ask_utils.is_request_type("LaunchRequest")(handler_input)
 
     def handle(self, handler_input):
@@ -33,20 +35,44 @@ class LaunchRequestHandler(AbstractRequestHandler):
 
 class GetTrainTimesHandler(AbstractRequestHandler):
     """Handler for train times Intent."""
+
+    """
+
+    def rail_time():
+        train_times = IrishRailRTPI()
+        origin = input('origin: ')
+        #destination = raw_input('destination: ')
+        dir = input('direction: ')
+        data = json.dumps(train_times.get_station_by_name(origin,num_minutes=30), indent=4, sort_keys=True)
+        resp = json.loads(data)
+
+        for i in range(len(resp)):
+            dict_data = resp[i]
+            if dict_data['direction']==dir: #filter out by direction
+                return ('the next {} train is in {} mins'.format(dir, dict_data['due_in_mins']))
+
+
+    """
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
         return ask_utils.is_intent_name("GetTrainTimes")(handler_input)
 
-    def handle(self, handler_input):
-        # type: (HandlerInput) -> Response
-        speak_output = "you have opened train times"
+    def railTimeIntent():
+        train_times = IrishRailRTPI()
+        origin = "Maynooth"
+        #destination = raw_input('destination: ')
+        dir = "southbound"
+        data = json.dumps(train_times.get_station_by_name(origin,num_minutes=30), indent=4, sort_keys=True)
+        resp = json.loads(data)
 
-        return (
-            handler_input.response_builder
-                .speak(speak_output)
-                # .ask("add a reprompt if you want to keep the session open for the user to respond")
-                .response
-        )
+        for i in range(len(resp)):
+            dict_data = resp[i]
+            if dict_data['direction']==dir: #filter out by direction
+                alexa_resp = "the next"+dir+"train is in"+dict_data['due_in_mins']"mins"
+                alexa_ask = "wanna hear bus times?"
+
+        return handler_input.response_builder.speak(alexa_resp).ask(alexa_ask)
+
 
 class GetBusTimesHandler(AbstractRequestHandler):
     def can_handle(self, handler_input):
@@ -127,12 +153,7 @@ class IntentReflectorHandler(AbstractRequestHandler):
                 .response
         )
 
-
 class CatchAllExceptionHandler(AbstractExceptionHandler):
-    """Generic error handling to capture any syntax or routing errors. If you receive an error
-    stating the request handler chain is not found, you have not implemented a handler for
-    the intent being invoked or included it in the skill builder below.
-    """
     def can_handle(self, handler_input, exception):
         # type: (HandlerInput, Exception) -> bool
         return True

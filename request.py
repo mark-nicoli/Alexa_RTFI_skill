@@ -10,7 +10,10 @@ def dbus_times():
     g = db.RtpiApi(user_agent='test')
     bus_times = g.rtpi(stop_number, route)
     #print(my_stop.timestamp)
-    return ('the next {} bus is in in {} mins'.format(route, bus_times.results[0]['duetime']))
+    if bus_times.results[0]['duetime'] != 'due':
+        return ('the next {} bus is in {} mins'.format(route, bus_times.results[0]['duetime']))
+    else:
+        return ('bus is due now')
 # get time for next train
 def rail_time():
     train_times = IrishRailRTPI()

@@ -6,11 +6,14 @@ from ir import IrishRailRTPI
 
 def dbus_times():
     route = input('Enter route number: ')
-    stop_number = input('Enter stop number: ')
+    stop_number = input('Enter stop number: ')   #4825
     g = db.RtpiApi(user_agent='test')
     bus_times = g.rtpi(stop_number, route)
     #print(my_stop.timestamp)
-    return ('the next {} bus is in in {} mins'.format(route, bus_times.results[0]['duetime']))
+    if bus_times.results[0]['duetime'] != 'due':
+        return ('the next {} bus is in {} mins'.format(route, bus_times.results[0]['duetime']))
+    else:
+        return ('bus is due now')
 # get time for next train
 def rail_time():
     train_times = IrishRailRTPI()
@@ -40,3 +43,5 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+#4825

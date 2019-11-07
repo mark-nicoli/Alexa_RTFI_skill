@@ -1,6 +1,6 @@
 from __future__ import print_function
 from botocore.vendored import requests
-import datetime import datetime
+from datetime import datetime
 import logging
 
 def lambda_handler(event, context):
@@ -21,6 +21,10 @@ def on_intent(event):
         return get_bus_time(event)
     elif intent_name == "AMAZON.HelpIntent":
         return get_help()
+    elif intent_name == "AMAZON.CancelIntent":
+        return nothing()
+    elif intent_name == "AMAZON.StopIntent":
+        return nothing()
 
 def get_train_time(event):
     train_times = IrishRailRTPI()
@@ -34,12 +38,19 @@ def get_train_time(event):
         dict_data = resp[i]
         if dict_data['direction']==dir: #filter out by direction
             #print(dict_data)
-            to_say = "the next "+dir" train is in"+dict_data['due_in_mins']"mins"
+            to_say = "the next "+dir+" train is in"+dict_data['due_in_mins']+"mins"
             return say_duration(to_say)
 
 def get_bus_time(event):
-    
-def build_speechlet_response(title, output, reprompt_text, should_end_session):
+    route = input('Enter route number: ')
+    stop_number = input('Enter stop number: ')
+    g = db.RtpiApi(user_agent='test')
+    bus_times = g.rtpi(stop_number, route)
+    #print(my_stop.timestamp)
+    to_say = "the next"+route+"bus is in in"+bus_times.results[0]['duetime']+"mins"
+    return say_duration(to_say)
+
+def build_speechlet_response(title, output, reprompt_text, shouldEndSession):
     return {
         'outputSpeech': {
             'type': 'PlainText',
@@ -58,6 +69,9 @@ def build_speechlet_response(title, output, reprompt_text, should_end_session):
         },
         'shouldEndSession': should_end_session
     }
+
+def nothing():
+    retutn(build_response({}))
 
 def get_help():
     speech_output = "welcome to transport times"

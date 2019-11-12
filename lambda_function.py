@@ -23,7 +23,7 @@ class LaunchRequestHandler(AbstractRequestHandler):
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
-        speak_output = "Welcome, you can ask for train or bus times. Which would you like to try?"
+        speak_output = "Would you like train or bus times?"
 
         return (
             handler_input.response_builder
@@ -84,7 +84,9 @@ class GetBusTimesHandler(AbstractRequestHandler):
         return ask_utils.is_intent_name("GetBusTimes")(handler_input)
 
     def handle(self, handler_input):
-        route = 37
+        route_speech = "which route are you looking for?"
+        slots = handler_input.request_envelope.request.intent.slots
+        route = (slots["RouteNumber"].value)
         stop_number = 4825
         g = db.RtpiApi(user_agent='test')
         bus_times = g.rtpi(stop_number, route)
@@ -92,9 +94,10 @@ class GetBusTimesHandler(AbstractRequestHandler):
             speak_output = "The bus is due now"
         else:
             speak_output = "The next bus is in "+bus_times.results[0]['duetime']+" minutes"
-
+        
         return (
             handler_input.response_builder
+            .speak(route_speech)
             .speak(speak_output)
             .response
         )

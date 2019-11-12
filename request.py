@@ -29,9 +29,6 @@ def rail_time():
             #print(dict_data)
             return ('the next {} train is in {} mins'.format(dir, dict_data['due_in_mins']))
 
-        '''print(dict_data)
-        print('The next {} train is in {} minutes'.format(dir, dict_data['due_in_mins']))'''
-
 def main():
     serv = input("train or bus times: ")
     if serv=='bus':

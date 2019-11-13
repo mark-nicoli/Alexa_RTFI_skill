@@ -91,7 +91,7 @@ class GetBusTimesHandler(AbstractRequestHandler):
         g = db.RtpiApi(user_agent='test')
         bus_times = g.rtpi(stop_number, route)
         if bus_times.results[0]['duetime'] == 'Due':
-            speak_output = "The bus is due now"
+            speak_output = "The "+route+" bus is due now"
         else:
             speak_output = "The next bus is in "+bus_times.results[0]['duetime']+" minutes"
         

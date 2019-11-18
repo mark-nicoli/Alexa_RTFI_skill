@@ -54,7 +54,7 @@ def get_welcome_response():
     """
     session_attributes = {}
     card_title = "Welcome"
-    speech_output = "welcome to transport times test 37"
+    speech_output = "welcome to transport times. Would you like train or bus times?"
     # If the user either does not reply to the welcome message or says something
     # that is not understood, they will be prompted again with this text.
     reprompt_text = "I don't know if you heard me, welcome to your custom alexa application!"
@@ -66,16 +66,16 @@ def get_welcome_response():
 def get_bus_time(intent):
     card_title="Bus times"
     session_attributes={}
-    
-    route = int(intent['slots']['routename']['value'])
+
+    route = int(intent['slots']['RouteName']['value'])
     #route=37
-    stop_number = 1680
+    stop_number = int(intent['slots']['stopNumber']['value'])
     g = db.RtpiApi(user_agent='test')
     bus_times=g.rtpi(stop_number,route)
     speech_output="the next bus is in "+bus_times.results[0]['duetime']+" minutes"
     reprompt_text="please tell me what you want. this is a reprompt"
     should_end_session=False
-    
+
     return build_response(session_attributes, build_speechlet_response(
         card_title, speech_output, reprompt_text, should_end_session))
 
@@ -92,7 +92,7 @@ def handle_session_end_request():
 
 def on_session_started(session_started_request, session):
     """ Called when the session starts.
-        One possible use of this function is to initialize specific 
+        One possible use of this function is to initialize specific
         variables from a previous state stored in an external database
     """
     # Add additional code here as needed
@@ -114,9 +114,11 @@ def on_intent(intent_request, session):
     intent_name = intent_request['intent']['name']
 
     # Dispatch to your skill's intent handlers
-    
+
     if intent_name == "test":
         return get_test_response()
+    elif intent_name == "getRouteNumber":
+        return get_route_number(intent)
     elif intent_name == "GetBusTimes":
         return get_bus_time(intent)
     elif intent_name == "AMAZON.HelpIntent":
@@ -162,4 +164,4 @@ def lambda_handler(event, context):
     elif event['request']['type'] == "IntentRequest":
         return on_intent(event['request'], event['session'])
     elif event['request']['type'] == "SessionEndedRequest":
-        return on_session_ended(event['request'], event['session'])
+        return on_session_ended(event['request'], event['session'])sion_ended(event['request'], event['session'])

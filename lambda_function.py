@@ -181,7 +181,7 @@ def lambda_handler(event, context):
     # if (event['session']['application']['applicationId'] !=
     #         "amzn1.echo-sdk-ams.app.[unique-value-here]"):
     #     raise ValueError("Invalid Application ID")
-
+    
     if event['session']['new']:
         on_session_started({'requestId': event['request']['requestId']},
                            event['session'])
@@ -191,5 +191,9 @@ def lambda_handler(event, context):
     elif event['request']['type'] == "IntentRequest":
         return on_intent(event['request'], event['session'])
     elif event['request']['type'] == "SessionEndedRequest":
+<<<<<<< HEAD
+        return on_session_ended(event['request'], event['session'])x(event['request'], event['session'])
+=======
         return on_session_ended(event['request'], event['session'])(event['request'], event['session'])
         return on_session_ended(event['request'], event['session'])sion_ended(event['request'], event['session'])
+>>>>>>> b3694a9aa564c493ad2d959d020137cc6fe1545b

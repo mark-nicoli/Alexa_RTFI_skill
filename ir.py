@@ -96,9 +96,7 @@ class IrishRailRTPI(object):
         }
         return _parse(url, 'objTrainMovements', attr_map)
 
-    def get_station_by_name(self,station_name,num_minutes=None,direction=None,
-                            destination=None,
-                            stops_at=None):
+    def get_station_by_name(self,station_name,num_minutes=None,direction=None,destination=None,stops_at=None):
         url = self.api_base_url + 'getStationDataByNameXML'
         params = {
             'StationDesc': station_name
@@ -106,20 +104,15 @@ class IrishRailRTPI(object):
         if num_minutes:
             url = url + '_withNumMins'
             params['NumMins'] = num_minutes
-        response = requests.get(
-            url, params=params, timeout=10)
+        response = requests.get(url, params=params, timeout=10)
         if response.status_code != 200:
             return []
         trains = self._parse_station_data(response.content)
         if direction is not None or destination is not None:
-            return self._prune_trains(trains,
-                                      direction=direction,
-                                      destination=destination,
-                                      stops_at=stops_at)
+            return self._prune_trains(trains,direction=direction,destination=destination,stops_at=stops_at)
         return trains
 
-    def _prune_trains(self, trains, direction=None,
-                      destination=None, stops_at=None):
+    def _prune_trains(self, trains, direction=None,destination=None, stops_at=None):
         pruned_data = []
         for train in trains:
             append = True
@@ -149,8 +142,7 @@ class IrishRailRTPI(object):
             'TrainId': train_code,
             'TrainDate': date
         }
-        response = requests.get(
-            url, params=params, timeout=10)
+        response = requests.get(url, params=params, timeout=10)
         if response.status_code != 200:
             return []
         return self._parse_train_movement_data(response.content)

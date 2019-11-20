@@ -13,7 +13,7 @@ STATION_TYPE_TO_CODE_DICT = {
 _LOGGER = logging.getLogger(__name__)
 
 
-def _get_minidom_tag_value(station, tag_name):
+def tag_value(station, tag_name):
     """get a value from a tag (if it exists)"""
     tag = station.getElementsByTagName(tag_name)[0].firstChild
     if tag:
@@ -28,7 +28,7 @@ def _parse(data, obj_name, attr_map):
     for obj in parsed_xml.getElementsByTagName(obj_name):
         parsed_obj = {}
         for (py_name, xml_name) in attr_map.items():
-            parsed_obj[py_name] = _get_minidom_tag_value(obj, xml_name)
+            parsed_obj[py_name] = tag_value(obj, xml_name)
         parsed_objects.append(parsed_obj)
     return parsed_objects
 

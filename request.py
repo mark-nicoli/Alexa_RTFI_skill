@@ -18,7 +18,7 @@ def dbus_times():
 def rail_time():
     train_times = IrishRailRTPI()
     origin = input('origin: ')
-    #destination = input('destination: ')
+    destination = input('destination: ')
     #dir = input('direction: ')
     num_mins = 30
     self = ""
@@ -31,12 +31,14 @@ def rail_time():
     for i in range(len(resp)):
         dict_data = resp[i]
 
-        '''if dict_data['origin']==origin: #filter out by origin
-            #print(dict_data)
-            #return ('the next train is in {} mins'.format(dict_data['due_in_mins']))
-            print (dict_data)'''
-
-        print (dict_data)
+        if dict_data['destination']==destination: #filter out by origin
+            #print(dict_data)   visualization of json data
+            '''
+                origin = coolmine.
+                expected_arrival_time = time train arrives at coolmine
+                due_in_mins = mins to arrival of train
+            '''
+            return ('the next train is in {} mins'.format(dict_data['due_in_mins']))
 
 def main():
     serv = input("train or bus times: ")

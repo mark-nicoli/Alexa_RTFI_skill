@@ -22,7 +22,8 @@ def rail_time():
     #dir = input('direction: ')
     num_mins = 30
     self = ""
-    data = json.dumps(train_times.get_station_by_name("coolmine"), indent=4, sort_keys=True)
+    # get all the trains calling at a station:origin
+    data = json.dumps(train_times.get_station_by_name(origin), indent=4, sort_keys=True)
     resp = json.loads(data)
 
     for i in range(len(resp)):

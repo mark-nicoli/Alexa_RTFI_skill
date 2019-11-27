@@ -19,15 +19,22 @@ def rail_time():
     train_times = IrishRailRTPI()
     origin = input('origin: ')
     #destination = raw_input('destination: ')
-    dir = input('direction: ')
-    data = json.dumps(train_times.get_station_by_name(origin,num_minutes=30), indent=4, sort_keys=True)
+    #dir = input('direction: ')
+    num_mins = 30
+    self = ""
+    # get all the trains calling at a station:origin
+    data = json.dumps(train_times.get_station_by_name(origin), indent=4, sort_keys=True)
     resp = json.loads(data)
 
     for i in range(len(resp)):
         dict_data = resp[i]
-        if dict_data['direction']==dir: #filter out by direction
+
+        '''if dict_data['origin']==origin: #filter out by origin
             #print(dict_data)
-            return ('the next {} train is in {} mins'.format(dir, dict_data['due_in_mins']))
+            #return ('the next train is in {} mins'.format(dict_data['due_in_mins']))
+            print (dict_data)'''
+
+        print (dict_data)
 
 def main():
     serv = input("train or bus times: ")

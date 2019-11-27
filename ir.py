@@ -136,7 +136,7 @@ class IrishRailRTPI(object):
 
     def get_train_stops(self, train_code, date=None):
         if date is None:
-            date = datetime.date.today().strftime("%d %B %Y")
+            date = datetime.date.today().strftime("%d %B %Y") #todays date
         url = self.api_base_url + 'getTrainMovementsXML'
         params = {
             'TrainId': train_code,

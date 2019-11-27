@@ -18,12 +18,14 @@ def dbus_times():
 def rail_time():
     train_times = IrishRailRTPI()
     origin = input('origin: ')
-    #destination = raw_input('destination: ')
+    #destination = input('destination: ')
     #dir = input('direction: ')
     num_mins = 30
     self = ""
-    # get all the trains calling at a station:origin
-    data = json.dumps(train_times.get_station_by_name(origin), indent=4, sort_keys=True)
+    ''' get all the trains calling at a station:origin
+        def get_station_by_name(self,station_name,num_minutes=None,direction=None,destination=None,stops_at=None):
+    '''
+    data = json.dumps(train_times.get_station_by_name(origin, destination), indent=4, sort_keys=True)
     resp = json.loads(data)
 
     for i in range(len(resp)):

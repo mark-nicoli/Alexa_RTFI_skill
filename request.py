@@ -38,7 +38,7 @@ def rail_time():
     for i in range(len(resp)):
         dict_data = resp[i]
 
-        if dict_data['destination']==destination: #filter out by origin
+        if dict_data['destination'].lower()==destination.lower(): #filter out by origin and make into lower case alexa
             #print(dict_data)   visualization of json data
             '''
                 origin = coolmine.

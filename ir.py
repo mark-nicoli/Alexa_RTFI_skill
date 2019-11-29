@@ -104,8 +104,7 @@ class IrishRailRTPI(object):
         if num_minutes:
             url = url + '_withNumMins'
             params['NumMins'] = num_minutes
-        response = requests.get(
-            url, params=params, timeout=10)
+        response = requests.get(url, params=params, timeout=10)
         if response.status_code != 200:
             return []
         trains = self._parse_station_data(response.content)
@@ -137,14 +136,13 @@ class IrishRailRTPI(object):
 
     def get_train_stops(self, train_code, date=None):
         if date is None:
-            date = datetime.date.today().strftime("%d %B %Y")
+            date = datetime.date.today().strftime("%d %B %Y") #todays date
         url = self.api_base_url + 'getTrainMovementsXML'
         params = {
             'TrainId': train_code,
             'TrainDate': date
         }
-        response = requests.get(
-            url, params=params, timeout=10)
+        response = requests.get(url, params=params, timeout=10)
         if response.status_code != 200:
             return []
         return self._parse_train_movement_data(response.content)

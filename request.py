@@ -17,24 +17,38 @@ def dbus_times():
 # get time for next train
 def rail_time():
     train_times = IrishRailRTPI()
+    '''
+        input type{
+            pearse station: Dublin pearse
+            connolly: Dublin Connolly
+        }
+    '''
     origin = input('origin: ')
-    #destination = raw_input('destination: ')
+    destination = input('destination: ')
     #dir = input('direction: ')
     num_mins = 30
     self = ""
-    # get all the trains calling at a station:origin
-    data = json.dumps(train_times.get_station_by_name(origin), indent=4, sort_keys=True)
+    '''
+        get all the trains calling at a station:origin
+        def get_station_by_name(self,station_name,num_minutes=None,direction=None,destination=None,stops_at=None):
+    '''
+    data = json.dumps(train_times.get_station_by_name(origin, destination), indent=4, sort_keys=True)
     resp = json.loads(data)
 
     for i in range(len(resp)):
         dict_data = resp[i]
 
-        '''if dict_data['origin']==origin: #filter out by origin
-            #print(dict_data)
-            #return ('the next train is in {} mins'.format(dict_data['due_in_mins']))
-            print (dict_data)'''
-
-        print (dict_data)
+        if dict_data['destination']==destination: #filter out by origin
+            #print(dict_data)   visualization of json data
+            '''
+                origin = coolmine.
+                expected_arrival_time = time train arrives at coolmine
+                due_in_mins = mins to arrival of train
+            '''
+            if dict_data['due_in_mins'] == 'Due':
+                return ('Your train is due now')
+            else:
+                return ('The next train is in {} mins'.format(dict_data['due_in_mins']))
 
 def main():
     serv = input("train or bus times: ")

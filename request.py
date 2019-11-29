@@ -17,12 +17,19 @@ def dbus_times():
 # get time for next train
 def rail_time():
     train_times = IrishRailRTPI()
+    '''
+        input type{
+            pearse station: Dublin pearse
+            connolly: Dublin Connolly
+        }
+    '''
     origin = input('origin: ')
     destination = input('destination: ')
     #dir = input('direction: ')
     num_mins = 30
     self = ""
-    ''' get all the trains calling at a station:origin
+    '''
+        get all the trains calling at a station:origin
         def get_station_by_name(self,station_name,num_minutes=None,direction=None,destination=None,stops_at=None):
     '''
     data = json.dumps(train_times.get_station_by_name(origin, destination), indent=4, sort_keys=True)
@@ -39,9 +46,9 @@ def rail_time():
                 due_in_mins = mins to arrival of train
             '''
             if dict_data['due_in_mins'] == 'Due':
-                return ('the next train is due now')
+                return ('Your train is due now')
             else:
-                return ('the next train is in {} mins'.format(dict_data['due_in_mins']))
+                return ('The next train is in {} mins'.format(dict_data['due_in_mins']))
 
 def main():
     serv = input("train or bus times: ")

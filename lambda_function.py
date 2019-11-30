@@ -50,8 +50,7 @@ def get_welcome_response():
     # that is not understood, they will be prompted again with this text.
     reprompt_text = "I don't know if you heard me, welcome to your custom alexa application!"
     should_end_session = False
-    return build_response(session_attributes, build_speechlet_response(
-        card_title, speech_output, reprompt_text, should_end_session))
+    return build_response(session_attributes, build_speechlet_response(card_title, speech_output, reprompt_text, should_end_session))
 
 #train times from ir.py file
 def get_train_time(intent):

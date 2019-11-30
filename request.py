@@ -45,7 +45,7 @@ def rail_time():
                 expected_arrival_time = time train arrives at coolmine
                 due_in_mins = mins to arrival of train
             '''
-            if dict_data['due_in_mins'] == 'Due':
+            if dict_data['due_in_mins'] == 'Due': #avoid 'next train is due in due minutes' output
                 return ('Your train is due now')
             else:
                 return ('The next train is in {} mins'.format(dict_data['due_in_mins']))

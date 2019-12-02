@@ -25,6 +25,7 @@ def rail_time():
     '''
     origin = input('origin: ')
     destination = input('destination: ').lower()
+    stops_at = 'castleknock'.lower()
     #dir = input('direction: ')
     num_mins = 30
     '''

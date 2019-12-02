@@ -59,14 +59,17 @@ def get_train_time(intent):
 
     train_times = IrishRailRTPI()
     origin = intent['slots']['origin']['value']
-    direction = intent['slots']['direction']['value']
+    destination = intent['slots']['direction']['value']
     data = json.dumps(train_times.get_station_by_name(origin,destination), indent=4, sort_keys=True)
     resp = json.loads(data)
 
     for i in range(len(resp)):
         dict_data = resp[i]
-        if dict_data['direction'].lower()==direction.lower(): #filter out by direction and make into lower case
-            speech_output = "the next "+direction+" train is in "+dict_data['due_in_mins']+" mins"
+        if dict_data['destination'].lower()==destination: #filter out by direction and make into lower case
+            if dict_data['due_in_mins'] == 'Due':
+                speech_output = "The train is due now"
+            else:
+                speech_output = "the next "+destination+" train is in "+dict_data['due_in_mins']+" mins"
 
     reprompt_text = "reprompt text"
     should_end_session = False

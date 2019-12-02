@@ -24,10 +24,9 @@ def rail_time():
         }
     '''
     origin = input('origin: ')
-    destination = input('destination: ')
+    destination = input('destination: ').lower()
     #dir = input('direction: ')
     num_mins = 30
-    self = ""
     '''
         get all the trains calling at a station:origin
         def get_station_by_name(self,station_name,num_minutes=None,direction=None,destination=None,stops_at=None):
@@ -37,8 +36,7 @@ def rail_time():
 
     for i in range(len(resp)):
         dict_data = resp[i]
-
-        if dict_data['destination'].lower()==destination.lower(): #filter out by origin and make into lower case alexa
+        if dict_data['destination'].lower()==destination: #filter out by origin and make into lower case alexa
             #print(dict_data)   visualization of json data
             '''
                 origin = coolmine.

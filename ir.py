@@ -3,7 +3,6 @@ import datetime
 import logging
 import requests
 
-
 STATION_TYPE_TO_CODE_DICT = {
     'mainline': 'M',
     'suburban': 'S',

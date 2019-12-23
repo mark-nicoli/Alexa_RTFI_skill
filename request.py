@@ -22,6 +22,7 @@ def rail_time():
             pearse station: Dublin pearse
             connolly: Dublin Connolly
         }
+        
     '''
     origin = input('origin: ')
     destination = input('destination: ').lower()

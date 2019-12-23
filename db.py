@@ -81,10 +81,10 @@ class RtpiApi(): #interaction with API
         resp = requests.get(self.RTPI_SERV + uri_extens, params=req_items,
                             headers=self.user_agent)
         resp_json = resp.json()
-        return MagicBox(resp_json)
+        return Data(resp_json)
 
 
-class MagicBox:
+class Data:
     '''A container class returned to user for cleaner data access.'''
     def __init__(self, response):
         for key, value in response.items():

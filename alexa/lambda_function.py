@@ -30,7 +30,6 @@ def build_response(session_attributes, speechlet_response):
         'response': speechlet_response
     }
 
-
 # skill behaviour
 def get_test_response():
     session_attributes = {}
@@ -156,10 +155,6 @@ def lambda_handler(event, context):
     """
     print("Incoming request...")
 
-    """
-    prevent someone else from configuring a skill that sends requests to this
-    function.
-    """
     # if (event['session']['application']['applicationId'] !=
     #         "amzn1.echo-sdk-ams.app.[unique-value-here]"):
     #     raise ValueError("Invalid Application ID")

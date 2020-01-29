@@ -10,7 +10,7 @@ except ImportError:
 
 class RtpiApi(): #interaction with API
 
-    RTPI_SERV = 'https://data.dublinked.ie/cgi-bin/rtpi/'
+    RTPI_SERV = 'https://data.smartdublin.ie/cgi-bin/rtpi/'
 
     def __init__(self, user_agent=None):
         self.user_agent = {'User-Agent': user_agent}
@@ -27,7 +27,7 @@ class RtpiApi(): #interaction with API
             args['operator'] = operator
 
         return self._make_request('realtimebusinformation', args)
-        return self._make_request('realtimetraininformation', args)
+        #return self._make_request('realtimetraininformation', args)
 
     def tt_info(self, type_, stop, route, datetime=None, max_results=None, operator=None):
         #timetable and timetable by datetime wrapper
@@ -54,7 +54,7 @@ class RtpiApi(): #interaction with API
             args['operator'] = operator
 
         return self._make_request('busstopinformation', args)
-        return self._make_request('trainstopinformation', args)
+        #return self._make_request('trainstopinformation', args)
 
     def route_info(self, route, operator):
     #   route information wrapper

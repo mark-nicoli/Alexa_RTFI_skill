@@ -1,7 +1,6 @@
 import db
 import json
 from ir import IrishRailRTPI
-
 #Get time for next bus
 #mark = 'smart' if haim == 'old' else 'dumb'
 
@@ -40,7 +39,7 @@ def rail_time():
     for i in range(len(resp)):
         dict_data = resp[i]
         if dict_data['destination'].lower()==destination: #filter out by origin and make into lower case for alexa
-            print(dict_data['message'])  # visualization of json data
+            print(dict_data)  # visualization of json data
             '''
                 origin = coolmine.
                 expected_arrival_time = time train arrives at coolmine

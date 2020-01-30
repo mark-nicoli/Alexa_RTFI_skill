@@ -33,9 +33,9 @@ def _parse(data, obj_name, attr_map):
 
 
 class IrishRailRTPI(object):
-    #interactions with irish railAPI
+    #rail api interactions
     def _parse_station_list(self, data):
-        """parse the station list"""
+        #parse the station list
         attr_map = {
             'name': 'StationDesc',
             'alias': 'StationAlias',
@@ -47,7 +47,7 @@ class IrishRailRTPI(object):
         return _parse(data, 'objStation', attr_map)
 
     def _parse_station_data(self, data):
-        """parse the station data"""
+        #parse the station data
         attr_map = {
             'code': 'Traincode',
             'origin': 'Origin',
@@ -67,7 +67,7 @@ class IrishRailRTPI(object):
         return _parse(data, 'objStationData', attr_map)
 
     def _parse_all_train_data(self, url):
-        """parse train data"""
+        #parse train data
         attr_map = {
             'status': 'TrainStatus',
             'latitude': 'TrainLatitude',
@@ -80,7 +80,7 @@ class IrishRailRTPI(object):
         return _parse(url, 'objTrainPositions', attr_map)
 
     def _parse_train_movement_data(self, url):
-        """parse train data"""
+        #parse train data
         attr_map = {
             'code': 'TrainCode',
             'date': 'TrainDate',

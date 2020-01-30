@@ -1,6 +1,7 @@
 import db
 import json
 from ir import IrishRailRTPI
+
 #Get time for next bus
 #mark = 'smart' if haim == 'old' else 'dumb'
 
@@ -9,6 +10,7 @@ def dbus_times():
     stop_number = input('Enter stop number: ')   #4825
     g = db.RtpiApi(user_agent='test')
     bus_times = g.rtpi(stop_number, route)
+    print (bus_times)
     #print(my_stop.timestamp)
     if bus_times.results[0]['duetime'] != 'due':
         return ('the next {} bus is in {} mins'.format(route, bus_times.results[0]['duetime']))
@@ -17,29 +19,28 @@ def dbus_times():
 # get time for next train
 def rail_time():
     train_times = IrishRailRTPI()
-    '''
-        input type{
-            pearse station: Dublin pearse
-            connolly: Dublin Connolly
-        }
-        
-    '''
+    
+    # input type{
+    #     pearse station: Dublin pearse
+    #     connolly: Dublin Connolly
+    # }
+    
     origin = input('origin: ')
     destination = input('destination: ').lower()
-    stops_at = 'castleknock'.lower()
-    #dir = input('direction: ')
-    num_mins = 30
+    stops = 'castleknock'.lower()
+    # #dir = input('direction: ')
+    # num_mins = 30
     '''
         get all the trains calling at a station:origin
         def get_station_by_name(self,station_name,num_minutes=None,direction=None,destination=None,stops_at=None):
     '''
-    data = json.dumps(train_times.get_station_by_name(origin, destination), indent=4, sort_keys=True)
+    data = json.dumps(train_times.get_station_by_name(origin, destination, stops_at = destination), indent=4, sort_keys=True)
     resp = json.loads(data)
 
     for i in range(len(resp)):
         dict_data = resp[i]
-        if dict_data['destination'].lower()==destination: #filter out by origin and make into lower case alexa
-            #print(dict_data)   visualization of json data
+        if dict_data['destination'].lower()==destination: #filter out by origin and make into lower case for alexa
+            print(dict_data['message'])  # visualization of json data
             '''
                 origin = coolmine.
                 expected_arrival_time = time train arrives at coolmine
@@ -62,4 +63,4 @@ def main():
 if __name__ == '__main__':
     main()
 
-#4825
+#4825 - test bus stop

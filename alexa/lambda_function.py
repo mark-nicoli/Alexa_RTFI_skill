@@ -51,11 +51,19 @@ def get_welcome_response():
     should_end_session = False
     return build_response(session_attributes, build_speechlet_response(card_title, speech_output, reprompt_text, should_end_session))
 
-#train times from ir.py file
+# train times from ir api
 def get_train_time(intent):
     session_attributes = {}
     card_title = "train times"
 
+    '''
+        input type{
+            pearse station: Dublin pearse
+            connolly: Dublin Connolly
+        }
+        
+    '''
+    
     train_times = IrishRailRTPI()
     origin = intent['slots']['origin']['value']
     destination = intent['slots']['direction']['value']

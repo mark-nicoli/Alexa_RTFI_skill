@@ -39,7 +39,8 @@ def rail_time():
     for i in range(len(resp)):
         dict_data = resp[i]
         if dict_data['destination'].lower()==destination: #filter out by origin and make into lower case for alexa
-            print(dict_data)  # visualization of json data
+            print(dict_data['destination'].lower())  # visualization of json data
+            print(destinations)
             '''
                 origin = coolmine.
                 expected_arrival_time = time train arrives at coolmine

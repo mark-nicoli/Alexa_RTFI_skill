@@ -69,7 +69,6 @@ def get_train_time(intent):
     destination = intent['slots']['direction']['value']
     data = json.dumps(train_times.get_station_by_name(origin,destination), indent=4, sort_keys=True)
     resp = json.loads(data)
-    speech_output = "mark is the biggest idiot"
     
     for i in range(len(resp)):
         dict_data = resp[i]

@@ -35,7 +35,7 @@ def rail_time():
     data = json.dumps(train_times.get_station_by_name(origin, destination, stops_at = destination), indent=4, sort_keys=True)
     resp = json.loads(data)
 
-    for i in range(len(resp)):
+    for i in range(0,len(resp)):
         dict_data = resp[i]
         #print(list(resp[0]))
         print(destination)

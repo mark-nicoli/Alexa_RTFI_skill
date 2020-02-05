@@ -70,7 +70,7 @@ def get_train_time(intent):
     data = json.dumps(train_times.get_station_by_name(origin,destination), indent=4, sort_keys=True)
     resp = json.loads(data)
     
-    for i in range(0,len(resp)):
+    for i in range(len(resp)):
         dict_data = resp[i]
         if dict_data['destination'].casefold()==destination.casefold(): #filter out by direction and make into lower case
             speech_output = "the next "+destination+" train is in "+dict_data['due_in_mins']+" mins"
@@ -134,8 +134,6 @@ def on_intent(intent_request, session):
     if intent_name == "test":
         return get_test_response()
     elif intent_name == "getRouteNumber":
-        return get_route_number(intent)
-    elif intent_name == "GetTrainTimes":
         return get_train_time(intent)
     elif intent_name == "GetBusTimes":
         return get_bus_time(intent)

@@ -33,14 +33,13 @@ def rail_time():
         def get_station_by_name(self,station_name,num_minutes=None,direction=None,destination=None,stops_at=None):
     '''
     data = json.dumps(train_times.get_station_by_name(origin, destination, stops_at = destination), indent=4, sort_keys=True)
-    resp = json.loads(data)
-
+    resp = json.loads(data) #we get a list of dictionaries
+    # print(len(resp))
+    #print(resp)
     for i in range(0,len(resp)):
         dict_data = resp[i]
-        #print(list(resp[0]))
-        print(destination)
-        if dict_data.get('destination').casefold()==destination.casefold(): #filter out by origin and make into lower case for alexa
-            print(dict_data)  # visualization of json data
+        oi = dict_data['destination']
+        if oi.lower()==destination: #filter out by origin and make into lower case for alexa
             '''
                 origin = coolmine.
                 expected_arrival_time = time train arrives at coolmine

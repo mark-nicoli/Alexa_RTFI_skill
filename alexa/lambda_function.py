@@ -45,10 +45,10 @@ def get_welcome_response():
     #start up message
     session_attributes = {}
     card_title = "Welcome"
-    speech_output = "welcome to transport times. Would you like train or bus times?"
+    speech_output = "which transport service are you looking for?"
     # If the user either does not reply to the welcome message or says something
     # that is not understood, they will be prompted again with this text.
-    reprompt_text = "I don't know if you heard me, welcome to your custom alexa application!"
+    reprompt_text = "standard stuff"
     should_end_session = False
     return build_response(session_attributes, build_speechlet_response(card_title, speech_output, reprompt_text, should_end_session))
 
@@ -70,9 +70,10 @@ def get_train_time(intent):
     data = json.dumps(train_times.get_station_by_name(origin,destination), indent=4, sort_keys=True)
     resp = json.loads(data)
     
-    for i in range(len(resp)):
+    for i in range(0,len(resp)):  #len(resp) returns the amount of dictionaries
         dict_data = resp[i]
-        if dict_data['destination'].casefold()==destination.casefold(): #filter out by direction and make into lower case
+        oi = dict_data['destination']
+        if oi.lower()==destination.lower(): #filter out by direction and make into lower case
             speech_output = "the next "+destination+" train is in "+dict_data['due_in_mins']+" mins"
     
     reprompt_text = "reprompt text"
@@ -134,6 +135,8 @@ def on_intent(intent_request, session):
     if intent_name == "test":
         return get_test_response()
     elif intent_name == "getRouteNumber":
+        return get_route_number(intent)
+    elif intent_name == "GetTrainTimes":
         return get_train_time(intent)
     elif intent_name == "GetBusTimes":
         return get_bus_time(intent)

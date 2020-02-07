@@ -103,8 +103,7 @@ def get_bus_time(intent):
 
 def handle_session_end_request():
     card_title = "Session Ended"
-    speech_output = "Thank you for trying the Alexa Skills Kit sample. "\
-                    "Have a nice day! "
+    speech_output = "Have a nice day!"
     # True setting ends ends the session
     should_end_session = True
     return build_response({}, build_speechlet_response(

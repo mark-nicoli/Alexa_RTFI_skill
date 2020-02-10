@@ -133,8 +133,6 @@ def on_intent(intent_request, session):
 
     if intent_name == "test":
         return get_test_response()
-    elif intent_name == "getRouteNumber":
-        return get_route_number(intent)
     elif intent_name == "GetTrainTimes":
         return get_train_time(intent)
     elif intent_name == "GetBusTimes":

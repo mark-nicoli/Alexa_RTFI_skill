@@ -26,8 +26,6 @@ def rail_time():
     
     origin = input('origin: ')
     destination = input('destination: ').lower()
-    # #dir = input('direction: ')
-    # num_mins = 30
     '''
         get all the trains calling at a station:origin
         def get_station_by_name(self,station_name,num_minutes=None,direction=None,destination=None,stops_at=None):

@@ -89,7 +89,6 @@ def get_bus_time(intent):
     session_attributes={}
 
     route = intent['slots']['RouteName']['value']
-    #route=37
     stop_number = int(intent['slots']['stopNumber']['value'])
     g = db.RtpiApi(user_agent='test')
     bus_times=g.rtpi(stop_number,route)

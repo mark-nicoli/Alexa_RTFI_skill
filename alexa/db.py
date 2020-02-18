@@ -7,9 +7,7 @@ except ImportError:
     print('Requires Requests (http://docs.python-requests.org/en/master/)')
     exit(1)
 
-
 class RtpiApi(): #interaction with API
-
     RTPI_SERV = 'https://data.smartdublin.ie/cgi-bin/rtpi/'
 
     def __init__(self, user_agent=None):

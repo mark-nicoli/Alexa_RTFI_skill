@@ -46,13 +46,11 @@ def rail_time():
             dict_data2 = resp[i+1]
             if dict_data['due_in_mins'] == 'Due': #avoid 'next train is due in due minutes' output
                 return ('Your train is due now')
-            elif int(dict_data['due_in_mins']) > 20:
+            elif int(dict_data['due_in_mins']) <= 20:
+                return ('The next trains are in {} and {} mins'.format(dict_data['due_in_mins'], dict_data2['due_in_mins']))
+            else:
                 return ('The next train is in {} mins'.format(dict_data['due_in_mins']))
 
-
-            if int(dict_data['due_in_mins']) <= 20:
-                if oi.lower() == dict_data['destination']:
-                    return ('The next train is in {} mins'.format(dict_data['due_in_mins']))
 
 def main():
     serv = input("train or bus times: ")

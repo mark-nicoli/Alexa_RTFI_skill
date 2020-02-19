@@ -65,8 +65,8 @@ def get_train_time(intent):
     
     for i in range(0,len(resp)):  #len(resp) returns the amount of dictionaries
         dict_data = resp[i]
-        oi = dict_data['destination']
-        if oi.lower()==destination.lower(): #filter out by direction and make into lower case
+        des = dict_data['destination']
+        if des.lower()==destination.lower(): #filter out by direction and make into lower case
             speech_output = "the next "+destination+" train is in "+dict_data['due_in_mins']+" mins"
     
     reprompt_text = "reprompt text"

@@ -48,7 +48,7 @@ def get_welcome_response():
     speech_output = "which transport service are you looking for?"
     # If the user either does not reply to the welcome message or says something
     # that is not understood, they will be prompted again with this text.
-    reprompt_text = "standard stuff"
+    reprompt_text = "which transport service are you looking for?"
     should_end_session = False
     return build_response(session_attributes, build_speechlet_response(card_title, speech_output, reprompt_text, should_end_session))
 
@@ -57,13 +57,6 @@ def get_train_time(intent):
     session_attributes = {}
     card_title = "train times"
 
-    '''
-        input type{
-            pearse station: Dublin pearse
-            connolly: Dublin Connolly
-        }
-        
-    '''
     train_times = IrishRailRTPI()
     origin = intent['slots']['origin']['value']
     destination = intent['slots']['direction']['value']
@@ -89,6 +82,7 @@ def get_bus_time(intent):
     session_attributes={}
 
     route = intent['slots']['RouteName']['value']
+    #route=37
     stop_number = int(intent['slots']['stopNumber']['value'])
     g = db.RtpiApi(user_agent='test')
     bus_times=g.rtpi(stop_number,route)

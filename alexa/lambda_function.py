@@ -68,12 +68,11 @@ def get_train_time(intent):
         des = dict_data['destination']
         if des.lower()==destination.lower(): #filter out by direction and make into lower case
             speech_output = "the next "+destination+" train is in "+dict_data['due_in_mins']+" mins"
-    
     reprompt_text = "reprompt text"
-    should_end_session = False
+    should_end_session = True
 
     return build_response(session_attributes,build_speechlet_response(
-        card_title, speech_output, reprompt_text, should_end_session
+        card_title, speech_output,reprompt_text, should_end_session
         ))
 
 #get the bus times from db.py file
@@ -87,7 +86,8 @@ def get_bus_time(intent):
     g = db.RtpiApi(user_agent='test')
     bus_times=g.rtpi(stop_number,route)
     next_bus = bus_times.results[0]['duetime']
-    speech_output="the next "+route+" bus callin at stop: "+str(stop_number)+" is in "+str(next_bus)+" minutes"
+    next_bus2 = bus_times.results[1]['duetime']
+    speech_output="the next "+route+" buses calling at stop: "+str(stop_number)+" are in "+str(next_bus)+" and "+str(next_bus2)+" minutes"
     reprompt_text="please tell me what you want. this is a reprompt"
     should_end_session=False
 

@@ -85,12 +85,17 @@ def get_bus_time(intent):
     stop_number = int(intent['slots']['stopNumber']['value'])
     g = db.RtpiApi(user_agent='test')
     bus_times=g.rtpi(stop_number,route)
-    next_bus = bus_times.results[0]['duetime']
-    next_bus2 = bus_times.results[1]['duetime']
-    if next_bus == "Due":
-        speech_output = "the next "+route+" buses calling at stop "+str(stop_number)+" are due now and in "+str(next_bus2)+" minutes"
-    else:
-        speech_output="the next "+route+" buses calling at stop: "+str(stop_number)+" are in "+str(next_bus)+" and "+str(next_bus2)+" minutes"
+    try:
+        next_bus = bus_times.results[0]['duetime']
+        next_bus2 = bus_times.results[1]['duetime']
+        if next_bus == "Due":
+            speech_output = "the next "+route+" buses calling at stop "+str(stop_number)+" are due now and in "+str(next_bus2)+" minutes"
+        else:
+            speech_output="the next "+route+" buses calling at stop: "+str(stop_number)+" are in "+str(next_bus)+" and "+str(next_bus2)+" minutes"
+        
+    except:
+        speech_output = "there are no such buses at the requested stop"
+        
     reprompt_text="please tell me what you want. this is a reprompt"
     should_end_session=True
 

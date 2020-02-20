@@ -87,9 +87,12 @@ def get_bus_time(intent):
     bus_times=g.rtpi(stop_number,route)
     next_bus = bus_times.results[0]['duetime']
     next_bus2 = bus_times.results[1]['duetime']
-    speech_output="the next "+route+" buses calling at stop: "+str(stop_number)+" are in "+str(next_bus)+" and "+str(next_bus2)+" minutes"
+    if next_bus == "Due":
+        speech_output = "the next "+route+" buses calling at stop "+str(stop_number)+" are due now and in "+str(next_bus2)+" minutes"
+    else:
+        speech_output="the next "+route+" buses calling at stop: "+str(stop_number)+" are in "+str(next_bus)+" and "+str(next_bus2)+" minutes"
     reprompt_text="please tell me what you want. this is a reprompt"
-    should_end_session=False
+    should_end_session=True
 
     return build_response(session_attributes, build_speechlet_response(
         card_title, speech_output, reprompt_text, should_end_session))
@@ -110,8 +113,9 @@ def on_session_started(session_started_request, session):
     pass
 
 def on_launch(launch_request, session):
-    """ Called when the user launches the skill without specifying what they
-    want
+    """ 
+        Called when the user launches the skill without specifying what they
+        want
     """
     # Dispatch to your skill's launch message
     return get_welcome_response()

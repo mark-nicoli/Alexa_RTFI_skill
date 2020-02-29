@@ -113,7 +113,6 @@ def handle_session_end_request():
 
 def on_session_started(session_started_request, session):
     #called when session starts
-    # Add additional code here as needed
     pass
 
 def on_launch(launch_request, session):

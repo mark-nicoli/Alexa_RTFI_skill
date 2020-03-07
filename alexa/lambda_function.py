@@ -62,12 +62,15 @@ def get_train_time(intent):
     destination = intent['slots']['direction']['value']
     data = json.dumps(train_times.get_station_by_name(origin,destination), indent=4, sort_keys=True)
     resp = json.loads(data)
+    try:
+        for i in range(0,len(resp)):  #len(resp) returns the amount of dictionaries
+            dict_data = resp[i-1]
+            des = dict_data['destination']
+            if des.lower()==destination.lower(): #filter out by direction and make into lower case
+                speech_output = "the next "+destination+" train is in "+dict_data['due_in_mins']+" mins"
     
-    for i in range(0,len(resp)):  #len(resp) returns the amount of dictionaries
-        dict_data = resp[i]
-        des = dict_data['destination']
-        if des.lower()==destination.lower(): #filter out by direction and make into lower case
-            speech_output = "the next "+destination+" train is in "+dict_data['due_in_mins']+" mins"
+    except:
+        speech_output = "There were no trains found for your request. Please try asking again"
     reprompt_text = "reprompt text"
     should_end_session = True
 
@@ -81,6 +84,7 @@ def get_bus_time(intent):
     session_attributes={}
 
     route = intent['slots']['RouteName']['value']
+    #route=37
     stop_number = int(intent['slots']['stopNumber']['value'])
     g = db.RtpiApi(user_agent='test')
     bus_times=g.rtpi(stop_number,route)

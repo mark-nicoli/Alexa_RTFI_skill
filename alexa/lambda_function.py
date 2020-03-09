@@ -45,7 +45,7 @@ def get_welcome_response():
     #start up message
     session_attributes = {}
     card_title = "Welcome"
-    speech_output = "which transport service are you looking for?"
+    speech_output = "Are you getting the bus or the train?"
     # If the user either does not reply to the welcome message or says something
     # that is not understood, they will be prompted again with this text.
     reprompt_text = "which transport service are you looking for?"
@@ -117,6 +117,7 @@ def handle_session_end_request():
 
 def on_session_started(session_started_request, session):
     #called when session starts
+    # Add additional code here as needed
     pass
 
 def on_launch(launch_request, session):

@@ -1,11 +1,6 @@
 #!/usr/bin/python3
 from sys import exit
-
-try:
-    import requests
-except ImportError:
-    print('Requires Requests (http://docs.python-requests.org/en/master/)')
-    exit(1)
+import requests
 
 class RtpiApi(): #interaction with API
     RTPI_SERV = 'https://data.smartdublin.ie/cgi-bin/rtpi/'

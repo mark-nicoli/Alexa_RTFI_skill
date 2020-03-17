@@ -11,8 +11,8 @@ def build_speechlet_response(title, output, reprompt_text, should_end_session):
         },
         'card': {
             'type': 'Simple',
-            'title': "SessionSpeechlet - " + title,
-            'content': "SessionSpeechlet - " + output
+            'title': title,
+            'content': output
         },
         'reprompt': {
             'outputSpeech': {
@@ -90,14 +90,14 @@ def get_bus_time(intent):
     bus_times=g.rtpi(stop_number,route)
     try:
         next_bus = bus_times.results[0]['duetime']
-        next_bus2 = bus_times.results[1]['duetime']
-        if next_bus == "Due":
-            speech_output = "the next "+route+" buses calling at stop "+str(stop_number)+" are due now and in "+str(next_bus2)+" minutes"
-        else:
-            speech_output="the next "+route+" buses calling at stop: "+str(stop_number)+" are in "+str(next_bus)+" and "+str(next_bus2)+" minutes"
         
+        if next_bus == "Due":
+            speech_output = "the next "+route+" bus calling at stop "+str(stop_number)+" is due now "
+        else:
+            speech_output="the next "+route+" bus calling at stop: "+str(stop_number)+" is in "+str(next_bus)+ " minutes"
+
     except:
-        speech_output = "there are no such buses at the requested stop"
+        speech_output = "there are currently no such buses at the requested stop"
         
     reprompt_text="please tell me what you want. this is a reprompt"
     should_end_session=True

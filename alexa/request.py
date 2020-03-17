@@ -1,21 +1,24 @@
 import db
 import json
 from ir import IrishRailRTPI
+import string
 #Get time for next bus
 #mark = 'smart' if haim == 'old' else 'dumb'
 
 def dbus_times():
     route = input('Enter route number: ')
+    form_route = route.translate({ord(c): None for c in string.whitespace})
+    print(form_route)
     stop_number = input('Enter stop number: ')   #4825
     g = db.RtpiApi(user_agent='test')
-    bus_times = g.rtpi(stop_number, route)
+    bus_times = g.rtpi(stop_number, form_route)
     next_bus = bus_times.results[0]['duetime']
 
     try:
         if next_bus == "Due":
-            print( "the next {} bus calling at stop {} is due now ".format(route,str(stop_number)))
+            print( "the next {} bus calling at stop {} is due now ".format(form_route,str(stop_number)))
         else:
-            print("the next {} bus calling at stop: {} is in {} minutes".format(route, str(stop_number),str(next_bus)))
+            print("the next {} bus calling at stop: {} is in {} minutes".format(form_route, str(stop_number),str(next_bus)))
 
     except:
         print("there are currently no such buses at the requested stop")

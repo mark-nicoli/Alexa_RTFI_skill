@@ -37,27 +37,26 @@ def rail_time():
         get all the trains calling at a station:origin
         def get_station_by_name(self,station_name,num_minutes=None,direction=None,destination=None,stops_at=None):
     '''
-    data = json.dumps(train_times.get_station_by_name(origin, destination, stops_at = destination), indent=4, sort_keys=True)
+    data = json.dumps(train_times.get_station_by_name(origin, destination), indent=4, sort_keys=True)
     resp = json.loads(data) #we get a list of dictionaries
     # print(len(resp))
     #print(resp)
-    for i in range(0,len(resp)):
-        dict_data = resp[i]
-        oi = dict_data['destination']
-        if oi.lower()==destination: #filter out by origin and make into lower case for alexa
+    for i in range(len(resp)):
+        #dict_data = resp[i]
+        #dict_data2 = resp[i+1]
+        print("{} : {}".format(i,resp[i]['destination']))
+        if resp[i]['destination'].lower()==destination: #filter out by origin and make into lower case for alexa
             '''
                 origin = coolmine.
                 expected_arrival_time = time train arrives at coolmine
                 due_in_mins = mins to arrival of train
             '''
-            dict_data2 = resp[i+1]
-            if dict_data['due_in_mins'] == 'Due': #avoid 'next train is due in due minutes' output
+            print(i)
+            if resp[i]['due_in_mins'] == 'Due': #avoid 'next train is due in due minutes' output
                 return ('Your train is due now')
-            elif int(dict_data['due_in_mins']) <= 20:
-                return ('The next trains are in {} and {} mins'.format(dict_data['due_in_mins'], dict_data2['due_in_mins']))
             else:
-                return ('The next train is in {} mins'.format(dict_data['due_in_mins']))
-
+                return ('The next train is in {} mins'.format(resp[i]['due_in_mins']))
+            print(i)
 
 def main():
     serv = input("train or bus times: ")

@@ -2,6 +2,7 @@ from __future__ import print_function
 import db
 from ir import IrishRailRTPI
 import json
+import string
 
 def build_speechlet_response(title, output, reprompt_text, should_end_session):
     return {
@@ -56,18 +57,27 @@ def get_welcome_response():
 def get_train_time(intent):
     session_attributes = {}
     card_title = "train times"
-
+    speech_output = ""
     train_times = IrishRailRTPI()
     origin = intent['slots']['origin']['value']
     destination = intent['slots']['direction']['value']
-    data = json.dumps(train_times.get_station_by_name(origin,destination), indent=4, sort_keys=True)
+    data = json.dumps(train_times.get_station_by_name(origin, destination), indent=4, sort_keys=False)
     resp = json.loads(data)
     try:
-        for i in range(0,len(resp)):  #len(resp) returns the amount of dictionaries
-            dict_data = resp[i-1]
-            des = dict_data['destination']
+        for i in range(len(resp)):  #len(resp) returns the amount of dictionaries
+            #dict_data = resp[i]
+            #dict_data2 = resp[i+1]
+            print("{} : {}".format(i,resp[i]['destination']))
+            des = resp[i]['destination']
             if des.lower()==destination.lower(): #filter out by direction and make into lower case
-                speech_output = "the next "+destination+" train is in "+dict_data['due_in_mins']+" mins"
+                '''if dict_data['due_in_mins'] == 'Due':
+                    speech_output = "Your train is due now. The next one will be arriving in "+ dict_data +" minutes"
+                elif int(dict_data['due_in_mins']) <= 20:
+                    speech_output = "The next trains are in "+dict_data+" and "+dict_data+" minutes"
+                else:'''
+                due_time = resp[i]["due_in_mins"]
+                speech_output = "the next "+destination+" train is in "+due_time+" minutes"
+                break
     
     except:
         speech_output = "There were no trains found for your request. Please try asking again"
@@ -84,17 +94,17 @@ def get_bus_time(intent):
     session_attributes={}
 
     route = intent['slots']['RouteName']['value']
-    #route=37
+    form_route = route.translate({ord(c): None for c in string.whitespace}) #remove whitespaces
     stop_number = int(intent['slots']['stopNumber']['value'])
     g = db.RtpiApi(user_agent='test')
-    bus_times=g.rtpi(stop_number,route)
+    bus_times=g.rtpi(stop_number,form_route)
     try:
         next_bus = bus_times.results[0]['duetime']
         
         if next_bus == "Due":
-            speech_output = "the next "+route+" bus calling at stop "+str(stop_number)+" is due now "
+            speech_output = "the next "+form_route+" bus calling at stop "+str(stop_number)+" is due now "
         else:
-            speech_output="the next "+route+" bus calling at stop: "+str(stop_number)+" is in "+str(next_bus)+ " minutes"
+            speech_output="the next "+form_route+" bus calling at stop: "+str(stop_number)+" is in "+str(next_bus)+ " minutes"
 
     except:
         speech_output = "there are currently no such buses at the requested stop"

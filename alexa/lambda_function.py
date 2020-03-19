@@ -70,13 +70,11 @@ def get_train_time(intent):
             print("{} : {}".format(i,resp[i]['destination']))
             des = resp[i]['destination']
             if des.lower()==destination.lower(): #filter out by direction and make into lower case
-                '''if dict_data['due_in_mins'] == 'Due':
-                    speech_output = "Your train is due now. The next one will be arriving in "+ dict_data +" minutes"
-                elif int(dict_data['due_in_mins']) <= 20:
-                    speech_output = "The next trains are in "+dict_data+" and "+dict_data+" minutes"
-                else:'''
                 due_time = resp[i]["due_in_mins"]
-                speech_output = "the next "+destination+" train is in "+due_time+" minutes"
+                if due_time == "Due":
+                    speech_output = "The next "+destination+" is due now"
+                else:
+                    speech_output = "the next "+destination+" train is in "+due_time+" minutes"
                 break
     
     except:

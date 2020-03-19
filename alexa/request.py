@@ -57,6 +57,7 @@ def rail_time():
             else:
                 return ('The next train is in {} mins'.format(resp[i]['due_in_mins']))
             print(i)
+            break
 
 def main():
     serv = input("train or bus times: ")

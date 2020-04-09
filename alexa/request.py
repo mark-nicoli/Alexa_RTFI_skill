@@ -37,7 +37,7 @@ def rail_time():
         get all the trains calling at a station:origin
         def get_station_by_name(self,station_name,num_minutes=None,direction=None,destination=None,stops_at=None):
     '''
-    data = json.dumps(train_times.get_station_by_name(origin, destination), indent=4, sort_keys=True)
+    data = json.dumps(train_times.get_station(origin, destination), indent=4, sort_keys=True)
     resp = json.loads(data) #we get a list of dictionaries
     # print(len(resp))
     #print(resp)
@@ -51,12 +51,10 @@ def rail_time():
                 expected_arrival_time = time train arrives at coolmine
                 due_in_mins = mins to arrival of train
             '''
-            print(i)
             if resp[i]['due_in_mins'] == 'Due': #avoid 'next train is due in due minutes' output
                 return ('Your train is due now')
             else:
                 return ('The next train is in {} mins'.format(resp[i]['due_in_mins']))
-            print(i)
             break
 
 def main():

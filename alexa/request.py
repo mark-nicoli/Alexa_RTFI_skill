@@ -44,7 +44,6 @@ def rail_time():
     for i in range(len(resp)):
         #dict_data = resp[i]
         #dict_data2 = resp[i+1]
-        print("{} : {}".format(i,resp[i]['destination']))
         if resp[i]['destination'].lower()==destination: #filter out by origin and make into lower case for alexa
             '''
                 origin = coolmine.

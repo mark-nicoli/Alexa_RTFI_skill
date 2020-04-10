@@ -2,13 +2,10 @@ import db
 import json
 from ir import IrishRailRTPI
 import string
-#Get time for next bus
-#mark = 'smart' if haim == 'old' else 'dumb'
 
 def dbus_times():
     route = input('Enter route number: ')
     form_route = route.translate({ord(c): None for c in string.whitespace})
-    print(form_route)
     stop_number = input('Enter stop number: ')   #4825
     g = db.RtpiApi(user_agent='test')
     bus_times = g.rtpi(stop_number, form_route)
@@ -39,17 +36,9 @@ def rail_time():
     '''
     data = json.dumps(train_times.get_station(origin, destination), indent=4, sort_keys=True)
     resp = json.loads(data) #we get a list of dictionaries
-    # print(len(resp))
-    #print(resp)
+
     for i in range(len(resp)):
-        #dict_data = resp[i]
-        #dict_data2 = resp[i+1]
         if resp[i]['destination'].lower()==destination: #filter out by origin and make into lower case for alexa
-            '''
-                origin = coolmine.
-                expected_arrival_time = time train arrives at coolmine
-                due_in_mins = mins to arrival of train
-            '''
             if resp[i]['due_in_mins'] == 'Due': #avoid 'next train is due in due minutes' output
                 return ('Your train is due now')
             else:
@@ -68,4 +57,3 @@ def main():
 if __name__ == '__main__':
     main()
 
-#4825 - test bus stop

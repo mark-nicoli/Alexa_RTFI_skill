@@ -65,8 +65,6 @@ def get_train_time(intent):
     resp = json.loads(data)
     try:
         for i in range(len(resp)):  #len(resp) returns the amount of dictionaries
-            #dict_data = resp[i]
-            #dict_data2 = resp[i+1]
             print("{} : {}".format(i,resp[i]['destination']))
             des = resp[i]['destination']
             if des.lower()==destination.lower(): #filter out by direction and make into lower case
@@ -129,16 +127,13 @@ def on_session_started(session_started_request, session):
     pass
 
 def on_launch(launch_request, session):
-    """ 
-        Called when the user launches the skill without specifying what they
-        want
-    """
+    #Called when the user launches the skill without specifying what they want
     # Dispatch to your skill's launch message
     return get_welcome_response()
 
 
 def on_intent(intent_request, session):
-    """ Called when the user specifies an intent for this skill """
+    #Called when the user specifies an intent for this skill
 
     intent = intent_request['intent']
     intent_name = intent_request['intent']['name']
@@ -160,26 +155,13 @@ def on_intent(intent_request, session):
 
 def on_session_ended(session_ended_request, session):
     #when user ends session
-    print("on_session_ended requestId=" + session_ended_request['requestId'] +
-          ", sessionId=" + session['sessionId'])
-    # add cleanup logic here
+    print("on_session_ended requestId=" + session_ended_request['requestId'] +", sessionId=" + session['sessionId'])
 
 
 # Handler
 
 def lambda_handler(event, context):
-    """ Route the incoming request based on type (LaunchRequest, IntentRequest,
-    etc.) The JSON body of the request is provided in the event parameter.
-    """
-    print("Incoming request...")
-
-    """
-    prevent someone else from configuring a skill that sends requests to this
-    function.
-    """
-    # if (event['session']['application']['applicationId'] !=
-    #         "amzn1.echo-sdk-ams.app.[unique-value-here]"):
-    #     raise ValueError("Invalid Application ID")
+    #Route the incoming request based on type (LaunchRequest, IntentRequest, etc.)
 
     if event['session']['new']:
         on_session_started({'requestId': event['request']['requestId']},
